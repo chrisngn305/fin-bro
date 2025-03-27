@@ -5,6 +5,13 @@ import ExpenseChart from "./ExpenseChart";
 import BudgetProgress from "./BudgetProgress";
 import RecentTransactions from "./RecentTransactions";
 import AccountsSummary from "./AccountsSummary";
+import NetWorthSnapshot from "./NetWorthSnapshot";
+import MonthlyFlowChart from "./MonthlyFlowChart";
+import BudgetAlerts from "./BudgetAlerts";
+import GoalTracker from "./GoalTracker";
+import FundsSummary from "./FundsSummary";
+import AiTipCard from "./AiTipCard";
+import QuickActions from "./QuickActions";
 
 const DashboardLayout = () => {
   return (
@@ -33,13 +40,30 @@ const DashboardLayout = () => {
           <FinancialSummary />
           
           <div className="dashboard-grid">
+            <NetWorthSnapshot />
+            <MonthlyFlowChart />
+          </div>
+          
+          <div className="dashboard-grid">
             <ExpenseChart />
             <BudgetProgress />
           </div>
           
           <div className="dashboard-grid">
+            <div className="col-span-1 md:col-span-1 xl:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <BudgetAlerts />
+              <GoalTracker />
+              <FundsSummary />
+              <AiTipCard />
+            </div>
+            <div className="col-span-1 md:col-span-1 xl:col-span-1 space-y-4">
+              <QuickActions />
+              <RecentTransactions />
+            </div>
+          </div>
+          
+          <div className="dashboard-grid">
             <AccountsSummary />
-            <RecentTransactions />
           </div>
         </div>
       </main>
