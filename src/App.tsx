@@ -6,8 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import TransactionsPage from "./pages/TransactionsPage";
+import BudgetPage from "./pages/BudgetPage";
 
-// Add additional routes for the new pages we'll create
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -18,10 +19,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="/transactions" element={<Index />} /> {/* We'll update this later */}
-          <Route path="/budget" element={<Index />} /> {/* We'll update this later */}
-          <Route path="/debt" element={<Index />} /> {/* We'll update this later */}
+          <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/budget" element={<BudgetPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

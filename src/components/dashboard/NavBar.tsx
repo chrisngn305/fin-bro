@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Home, PieChart, BarChart3, CreditCard, Settings, Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -8,6 +8,7 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,11 +24,14 @@ const NavBar = () => {
 
   const navLinks = [
     { title: "Dashboard", icon: Home, path: "/" },
-    { title: "Expenses", icon: PieChart, path: "/" },
-    { title: "Income", icon: BarChart3, path: "/" },
-    { title: "Accounts", icon: CreditCard, path: "/" },
+    { title: "Transactions", icon: CreditCard, path: "/transactions" },
+    { title: "Budget", icon: BarChart3, path: "/budget" },
     { title: "Settings", icon: Settings, path: "/" },
   ];
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <header
@@ -49,7 +53,11 @@ const NavBar = () => {
               <Link
                 key={link.title}
                 to={link.path}
-                className="nav-link active flex items-center gap-1.5"
+                className={`flex items-center gap-1.5 py-1 px-2 rounded-md transition-colors ${
+                  isActive(link.path) 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "text-gray-600 hover:text-primary hover:bg-primary/5"
+                }`}
               >
                 <link.icon className="h-4 w-4" />
                 <span>{link.title}</span>
@@ -77,7 +85,9 @@ const NavBar = () => {
                 <Link
                   key={link.title}
                   to={link.path}
-                  className="flex items-center gap-3 p-2 text-lg font-medium"
+                  className={`flex items-center gap-3 p-2 text-lg ${
+                    isActive(link.path) ? "font-medium text-primary" : "text-gray-600"
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   <link.icon className="h-5 w-5 text-primary" />

@@ -15,7 +15,8 @@ const Index = () => {
 
   return (
     <>
-      <style jsx global>{`
+      <style>
+        {`
         .dashboard-grid {
           display: grid;
           grid-template-columns: repeat(1, 1fr);
@@ -50,7 +51,8 @@ const Index = () => {
             grid-column: span 2;
           }
         }
-      `}</style>
+        `}
+      </style>
       <DashboardLayout />
     </>
   );
