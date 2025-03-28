@@ -1,75 +1,190 @@
 
-import { AlertCircle, AlertTriangle, TrendingDown } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-// Mock alerts data
-const mockAlerts = [
-  {
-    id: '1',
-    type: 'warning',
-    title: 'Shopping Over Budget',
-    description: 'You've spent $40 over your Shopping budget this month',
-    date: '2023-06-18',
-    icon: <AlertTriangle className="h-5 w-5 text-amber-500" />
-  },
-  {
-    id: '2',
-    type: 'danger',
-    title: 'Entertainment Over Budget',
-    description: 'You've spent $15 over your Entertainment budget this month',
-    date: '2023-06-15',
-    icon: <AlertCircle className="h-5 w-5 text-red-500" />
-  },
-  {
-    id: '3',
-    type: 'info',
-    title: 'Utilities Trending Higher',
-    description: 'Your utility spending is 15% higher than last month',
-    date: '2023-06-12',
-    icon: <TrendingDown className="h-5 w-5 text-blue-500" />
-  }
-];
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
 const BudgetAlertsList = () => {
+  const [currentTab, setCurrentTab] = useState("current");
+  
+  // Mock data for budget alerts
+  const currentAlerts = [
+    {
+      id: "1",
+      category: "Dining Out",
+      budget: 300,
+      spent: 275,
+      percentSpent: 92,
+      remaining: 25,
+      severity: "warning"
+    },
+    {
+      id: "2",
+      category: "Entertainment",
+      budget: 150,
+      spent: 165,
+      percentSpent: 110,
+      remaining: -15,
+      severity: "danger"
+    },
+    {
+      id: "3",
+      category: "Shopping",
+      budget: 250,
+      spent: 220,
+      percentSpent: 88,
+      remaining: 30,
+      severity: "warning"
+    }
+  ];
+  
+  const pastAlerts = [
+    {
+      id: "4",
+      category: "Dining Out",
+      budget: 300,
+      spent: 345,
+      percentSpent: 115,
+      remaining: -45,
+      severity: "danger",
+      month: "March"
+    },
+    {
+      id: "5",
+      category: "Groceries",
+      budget: 400,
+      spent: 430,
+      percentSpent: 108,
+      remaining: -30,
+      severity: "danger",
+      month: "March"
+    },
+    {
+      id: "6",
+      category: "Transportation",
+      budget: 200,
+      spent: 185,
+      percentSpent: 93,
+      remaining: 15,
+      severity: "warning",
+      month: "February"
+    }
+  ];
+
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Budget Alerts</CardTitle>
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ExclamationTriangleIcon className="h-5 w-5 text-amber-500" />
+            <CardTitle>Budget Alerts</CardTitle>
+          </div>
+          <Badge variant="outline" className="text-xs">
+            {currentAlerts.length} alerts
+          </Badge>
+        </div>
         <CardDescription>
-          Recent notifications about your budget
+          Categories that are near or over budget
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {mockAlerts.map((alert) => (
-            <div 
-              key={alert.id} 
-              className={`p-4 rounded-lg border ${
-                alert.type === 'warning' 
-                  ? 'bg-amber-50 border-amber-200' 
-                  : alert.type === 'danger'
-                    ? 'bg-red-50 border-red-200'
-                    : 'bg-blue-50 border-blue-200'
-              }`}
-            >
-              <div className="flex gap-3">
-                <div className="mt-0.5">
-                  {alert.icon}
+      
+      <CardContent className="p-0">
+        <Tabs defaultValue="current" value={currentTab} onValueChange={setCurrentTab}>
+          <div className="px-4">
+            <TabsList className="w-full">
+              <TabsTrigger value="current" className="flex-1">Current Month</TabsTrigger>
+              <TabsTrigger value="past" className="flex-1">Past Alerts</TabsTrigger>
+            </TabsList>
+          </div>
+          
+          <TabsContent value="current" className="pt-2">
+            <div className="space-y-1">
+              {currentAlerts.map((alert) => (
+                <div 
+                  key={alert.id}
+                  className={`border-l-4 ${
+                    alert.severity === "danger" ? "border-red-500" : "border-amber-500"
+                  } bg-muted/50 p-3`}
+                >
+                  <div className="flex justify-between mb-1">
+                    <div className="font-medium">{alert.category}</div>
+                    <div 
+                      className={`text-sm font-medium ${
+                        alert.severity === "danger" ? "text-red-500" : "text-amber-500"
+                      }`}
+                    >
+                      {alert.percentSpent}% spent
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <div>Budget: ${alert.budget}</div>
+                    <div>
+                      {alert.remaining < 0 
+                        ? `$${Math.abs(alert.remaining)} over budget` 
+                        : `$${alert.remaining} remaining`}
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-medium text-sm mb-1">{alert.title}</h4>
-                  <p className="text-sm opacity-90">{alert.description}</p>
-                  <p className="text-xs mt-2 opacity-70">{alert.date}</p>
+              ))}
+              
+              {currentAlerts.length === 0 && (
+                <div className="text-center py-6 text-muted-foreground">
+                  No budget alerts this month
                 </div>
-              </div>
+              )}
             </div>
-          ))}
+          </TabsContent>
+          
+          <TabsContent value="past" className="pt-2">
+            <div className="space-y-1">
+              {pastAlerts.map((alert) => (
+                <div 
+                  key={alert.id}
+                  className={`border-l-4 ${
+                    alert.severity === "danger" ? "border-red-500" : "border-amber-500"
+                  } bg-muted/50 p-3`}
+                >
+                  <div className="flex justify-between mb-1">
+                    <div className="font-medium">
+                      {alert.category}
+                      <span className="text-xs text-muted-foreground ml-2">
+                        {alert.month}
+                      </span>
+                    </div>
+                    <div 
+                      className={`text-sm font-medium ${
+                        alert.severity === "danger" ? "text-red-500" : "text-amber-500"
+                      }`}
+                    >
+                      {alert.percentSpent}% spent
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <div>Budget: ${alert.budget}</div>
+                    <div>
+                      {alert.remaining < 0 
+                        ? `$${Math.abs(alert.remaining)} over budget` 
+                        : `$${alert.remaining} remaining`}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              {pastAlerts.length === 0 && (
+                <div className="text-center py-6 text-muted-foreground">
+                  No past budget alerts
+                </div>
+              )}
+            </div>
+          </TabsContent>
+        </Tabs>
+        
+        <div className="p-4 pt-2">
+          <Button variant="outline" size="sm" className="w-full">
+            View all budget details
+          </Button>
         </div>
       </CardContent>
     </Card>

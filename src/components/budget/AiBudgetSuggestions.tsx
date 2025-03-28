@@ -1,84 +1,73 @@
 
-import { Lightbulb, Check } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-// Mock AI suggestions
-const mockSuggestions = [
-  {
-    id: '1',
-    title: 'Reduce subscription services',
-    description: 'You're spending $65/month on streaming services you rarely use. Consider consolidating to save ~$30/month.',
-    impact: 'Save $360/year',
-    color: 'bg-blue-50 border-blue-200'
-  },
-  {
-    id: '2',
-    title: 'Grocery shopping optimization',
-    description: 'Shopping at discount stores for staples could reduce your grocery bill by 15%.',
-    impact: 'Save $540/year',
-    color: 'bg-green-50 border-green-200'
-  },
-  {
-    id: '3',
-    title: 'Coffee budget adjustment',
-    description: 'Making coffee at home on weekdays could save you significant money on daily purchases.',
-    impact: 'Save $720/year',
-    color: 'bg-purple-50 border-purple-200'
-  }
-];
+import { Sparkles, BrainCircuit, ArrowRight } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const AiBudgetSuggestions = () => {
+  // This would normally come from an API in a real application
+  const suggestions = [
+    {
+      id: "1",
+      category: "Groceries",
+      currentSpend: 450,
+      suggestedBudget: 400,
+      savings: 50,
+      tip: "Consider meal planning to reduce food waste and grocery expenses"
+    },
+    {
+      id: "2",
+      category: "Entertainment",
+      currentSpend: 200,
+      suggestedBudget: 150,
+      savings: 50,
+      tip: "Look for free local events and activities instead of paid entertainment"
+    },
+    {
+      id: "3",
+      category: "Dining Out",
+      currentSpend: 300,
+      suggestedBudget: 200,
+      savings: 100,
+      tip: "Try limiting restaurant visits to once a week to save on dining expenses"
+    }
+  ];
+
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Lightbulb className="h-5 w-5 text-amber-500" />
-          AI Budget Advisor
-        </CardTitle>
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-purple-500" />
+            <CardTitle>AI Budget Suggestions</CardTitle>
+          </div>
+          <Button variant="ghost" size="sm" className="gap-1 text-xs">
+            Refresh <ArrowRight className="h-3.5 w-3.5" />
+          </Button>
+        </div>
         <CardDescription>
-          Smart suggestions to improve your finances
+          Intelligent suggestions to optimize your budget
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Accordion type="single" collapsible className="w-full">
-          {mockSuggestions.map((suggestion) => (
-            <AccordionItem key={suggestion.id} value={suggestion.id}>
-              <AccordionTrigger className="text-sm hover:no-underline">
-                {suggestion.title}
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className={`p-3 rounded-lg border ${suggestion.color} mt-2 mb-3`}>
-                  <p className="text-sm mb-3">{suggestion.description}</p>
-                  <div className="flex items-center gap-1 text-green-700 font-medium text-sm">
-                    <Check size={14} />
-                    <span>{suggestion.impact}</span>
-                  </div>
-                </div>
-                <button className="text-xs text-primary hover:underline">
-                  Apply this suggestion to my budget
-                </button>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-        
-        <div className="mt-4 pt-4 border-t">
-          <button className="w-full py-2 px-4 border border-primary/30 text-sm text-primary rounded-md hover:bg-primary/5 transition-colors">
-            Get Custom Budget Analysis
-          </button>
-        </div>
+      <CardContent className="space-y-4">
+        {suggestions.map((suggestion) => (
+          <div key={suggestion.id} className="rounded-lg border p-3 bg-muted/50">
+            <div className="flex justify-between mb-2">
+              <div className="font-medium">{suggestion.category}</div>
+              <div className="text-sm text-green-600 font-medium">
+                Save ${suggestion.savings}/mo
+              </div>
+            </div>
+            <div className="flex justify-between text-sm mb-2">
+              <div>Current: ${suggestion.currentSpend}/mo</div>
+              <div>Suggested: ${suggestion.suggestedBudget}/mo</div>
+            </div>
+            <div className="flex items-start gap-2 mt-3 bg-background rounded-md p-2">
+              <BrainCircuit className="h-4 w-4 text-purple-500 mt-0.5" />
+              <div className="text-xs">{suggestion.tip}</div>
+            </div>
+          </div>
+        ))}
+        <Button variant="outline" className="w-full text-sm">View all suggestions</Button>
       </CardContent>
     </Card>
   );
