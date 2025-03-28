@@ -1,5 +1,5 @@
 
-import { ExclamationTriangle } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -78,7 +78,7 @@ const BudgetAlertsList = () => {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ExclamationTriangle className="h-5 w-5 text-amber-500" />
+            <AlertTriangle className="h-5 w-5 text-amber-500" />
             <CardTitle>Budget Alerts</CardTitle>
           </div>
           <Badge variant="outline" className="text-xs">

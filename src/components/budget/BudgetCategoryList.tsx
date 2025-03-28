@@ -1,4 +1,3 @@
-
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
@@ -117,14 +116,13 @@ const BudgetCategoryList = ({ timeframe }: BudgetCategoryListProps) => {
                 
                 <Progress 
                   value={percentSpent > 100 ? 100 : percentSpent} 
-                  className="h-2" 
-                  indicatorColor={
+                  className={`h-2 ${
                     isOverBudget 
-                      ? "bg-red-500" 
+                      ? "bg-red-100" 
                       : isCloseToLimit 
-                        ? "bg-amber-500"
-                        : `bg-[${category.color}]`
-                  }
+                        ? "bg-amber-100"
+                        : `bg-gray-100`
+                  }`}
                 />
                 
                 {isOverBudget && (
@@ -138,7 +136,7 @@ const BudgetCategoryList = ({ timeframe }: BudgetCategoryListProps) => {
                 )}
                 
                 {isCloseToLimit && (
-                  <Alert variant="warning" className="bg-amber-50 text-amber-800 border-amber-200 py-2">
+                  <Alert className="bg-amber-50 text-amber-800 border-amber-200 py-2">
                     <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>Approaching Limit</AlertTitle>
                     <AlertDescription>
