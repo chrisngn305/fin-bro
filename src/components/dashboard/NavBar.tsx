@@ -12,7 +12,9 @@ import {
   Briefcase, 
   DollarSign,
   Flag,
-  PiggyBank
+  PiggyBank,
+  TrendingUp,
+  MessageCircle
 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -42,6 +44,8 @@ const NavBar = () => {
     { title: "Investments", icon: Briefcase, path: "/investments" },
     { title: "Goals", icon: Flag, path: "/goals" },
     { title: "Funds", icon: PiggyBank, path: "/funds" },
+    { title: "Insights", icon: TrendingUp, path: "/insights" },
+    { title: "Advisor", icon: MessageCircle, path: "/advisor" },
     { title: "Settings", icon: Settings, path: "/" },
   ];
 
