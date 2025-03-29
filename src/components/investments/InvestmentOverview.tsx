@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { TrendingUp, TrendingDown, Briefcase, DollarSign } from "lucide-react";
 
 // Mock data for investment overview
@@ -69,9 +69,7 @@ const InvestmentOverview = () => {
                           />
                         ))}
                       </Pie>
-                      <ChartTooltip>
-                        <ChartTooltipContent />
-                      </ChartTooltip>
+                      <Tooltip content={<ChartTooltipContent />} />
                     </PieChart>
                   </ResponsiveContainer>
                 </ChartContainer>
