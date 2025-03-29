@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, PieChart, BarChart3, CreditCard, Settings, Menu, X } from "lucide-react";
+import { Home, PieChart, BarChart3, CreditCard, Settings, Menu, X, Briefcase, DollarSign } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const NavBar = () => {
@@ -26,6 +26,8 @@ const NavBar = () => {
     { title: "Dashboard", icon: Home, path: "/" },
     { title: "Transactions", icon: CreditCard, path: "/transactions" },
     { title: "Budget", icon: BarChart3, path: "/budget" },
+    { title: "Debt", icon: DollarSign, path: "/debt" },
+    { title: "Investments", icon: Briefcase, path: "/investments" },
     { title: "Settings", icon: Settings, path: "/" },
   ];
 
