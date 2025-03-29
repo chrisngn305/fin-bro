@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { PiggyBank, TrendingUp, CreditCard, Dollar, Wallet, Target } from "lucide-react";
+import { PiggyBank, TrendingUp, CreditCard, DollarSign, Wallet, Target } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface SuggestedPromptsProps {
@@ -26,7 +26,7 @@ const SuggestedPrompts = ({ onUsePrompt }: SuggestedPromptsProps) => {
     },
     {
       text: "How should I structure my budget?",
-      icon: <Dollar className="h-4 w-4" />,
+      icon: <DollarSign className="h-4 w-4" />,
       color: "bg-purple-100 text-purple-700"
     },
     {
