@@ -46,7 +46,7 @@ const NavBar = () => {
     { title: "Funds", icon: PiggyBank, path: "/funds" },
     { title: "Insights", icon: TrendingUp, path: "/insights" },
     { title: "Advisor", icon: MessageCircle, path: "/advisor" },
-    { title: "Settings", icon: Settings, path: "/" },
+    { title: "Settings", icon: Settings, path: "/settings" },
   ];
 
   const isActive = (path: string) => {
