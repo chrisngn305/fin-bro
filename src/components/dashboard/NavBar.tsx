@@ -1,7 +1,19 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, PieChart, BarChart3, CreditCard, Settings, Menu, X, Briefcase, DollarSign } from "lucide-react";
+import { 
+  Home, 
+  PieChart, 
+  BarChart3, 
+  CreditCard, 
+  Settings, 
+  Menu, 
+  X, 
+  Briefcase, 
+  DollarSign,
+  Flag,
+  PiggyBank
+} from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const NavBar = () => {
@@ -28,6 +40,8 @@ const NavBar = () => {
     { title: "Budget", icon: BarChart3, path: "/budget" },
     { title: "Debt", icon: DollarSign, path: "/debt" },
     { title: "Investments", icon: Briefcase, path: "/investments" },
+    { title: "Goals", icon: Flag, path: "/goals" },
+    { title: "Funds", icon: PiggyBank, path: "/funds" },
     { title: "Settings", icon: Settings, path: "/" },
   ];
 
