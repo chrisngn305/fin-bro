@@ -1,5 +1,4 @@
 
-import NavBar from "./NavBar";
 import FinancialSummary from "./FinancialSummary";
 import ExpenseChart from "./ExpenseChart";
 import BudgetProgress from "./BudgetProgress";
@@ -16,9 +15,7 @@ import QuickActions from "./QuickActions";
 const DashboardLayout = () => {
   return (
     <div className="min-h-screen bg-gray-50 pb-10">
-      <NavBar />
-      
-      <main className="container mx-auto px-4 pt-24">
+      <main className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold">Financial Dashboard</h1>

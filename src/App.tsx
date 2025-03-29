@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AppLayout from "./components/layout/AppLayout";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import TransactionsPage from "./pages/TransactionsPage";
@@ -24,19 +25,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/transactions" element={<TransactionsPage />} />
-          <Route path="/budget" element={<BudgetPage />} />
-          <Route path="/debt" element={<DebtPage />} />
-          <Route path="/investments" element={<InvestmentPage />} />
-          <Route path="/goals" element={<GoalsPage />} />
-          <Route path="/funds" element={<FundsPage />} />
-          <Route path="/insights" element={<InsightsPage />} />
-          <Route path="/advisor" element={<AdvisorPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppLayout>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/transactions" element={<TransactionsPage />} />
+            <Route path="/budget" element={<BudgetPage />} />
+            <Route path="/debt" element={<DebtPage />} />
+            <Route path="/investments" element={<InvestmentPage />} />
+            <Route path="/goals" element={<GoalsPage />} />
+            <Route path="/funds" element={<FundsPage />} />
+            <Route path="/insights" element={<InsightsPage />} />
+            <Route path="/advisor" element={<AdvisorPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AppLayout>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
