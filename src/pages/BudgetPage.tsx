@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import NavBar from "@/components/dashboard/NavBar";
 import IncomeHistory from "@/components/budget/IncomeHistory";
 import BudgetCategoryList from "@/components/budget/BudgetCategoryList";
 import BudgetTimeframeSelector from "@/components/budget/BudgetTimeframeSelector";
@@ -12,9 +11,7 @@ const BudgetPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-10">
-      <NavBar />
-      
-      <main className="container mx-auto px-4 pt-24">
+      <main className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold">Income & Budget</h1>

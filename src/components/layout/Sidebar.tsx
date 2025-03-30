@@ -1,5 +1,3 @@
-
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, 
@@ -25,6 +23,11 @@ interface NavItem {
   path: string;
 }
 
+interface SidebarProps {
+  isCollapsed: boolean;
+  onCollapseChange: (collapsed: boolean) => void;
+}
+
 const navItems: NavItem[] = [
   { title: "Dashboard", icon: Home, path: "/" },
   { title: "Transactions", icon: CreditCard, path: "/transactions" },
@@ -38,8 +41,7 @@ const navItems: NavItem[] = [
   { title: "Settings", icon: Settings, path: "/settings" },
 ];
 
-const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const Sidebar = ({ isCollapsed, onCollapseChange }: SidebarProps) => {
   const location = useLocation();
   
   const isActive = (path: string) => location.pathname === path;
@@ -47,14 +49,14 @@ const Sidebar = () => {
   return (
     <aside 
       className={cn(
-        "h-screen fixed left-0 top-0 z-40 flex flex-col bg-background border-r transition-all duration-300",
+        "h-screen fixed left-0 top-0 z-50 flex flex-col bg-background border-r transition-all duration-300 ease-in-out",
         isCollapsed ? "w-[70px]" : "w-[250px]"
       )}
     >
       <div className="flex items-center justify-between p-4 h-16 border-b">
         <span className={cn(
-          "text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600 transition-opacity",
-          isCollapsed ? "opacity-0 w-0" : "opacity-100"
+          "text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600 transition-all duration-300",
+          isCollapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
         )}>
           FinancePro
         </span>
@@ -62,7 +64,7 @@ const Sidebar = () => {
           variant="ghost" 
           size="sm" 
           className="ml-auto" 
-          onClick={() => setIsCollapsed(!isCollapsed)}
+          onClick={() => onCollapseChange(!isCollapsed)}
         >
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </Button>
@@ -83,8 +85,8 @@ const Sidebar = () => {
               >
                 <item.icon className="h-5 w-5 flex-shrink-0" />
                 <span className={cn(
-                  "transition-opacity duration-200", 
-                  isCollapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100"
+                  "transition-all duration-300", 
+                  isCollapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-auto"
                 )}>
                   {item.title}
                 </span>

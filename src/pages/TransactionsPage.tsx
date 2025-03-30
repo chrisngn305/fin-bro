@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import NavBar from "@/components/dashboard/NavBar";
 import TransactionList from "@/components/transactions/TransactionList";
 import TransactionFilters from "@/components/transactions/TransactionFilters";
 import AddTransactionDialog from "@/components/transactions/AddTransactionDialog";
@@ -19,9 +18,7 @@ const TransactionsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-10">
-      <NavBar />
-      
-      <main className="container mx-auto px-4 pt-24">
+      <main className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold">Transactions</h1>
