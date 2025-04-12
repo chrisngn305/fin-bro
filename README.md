@@ -36,7 +36,7 @@ A comprehensive financial management application built with React, TypeScript, N
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v20 or higher)
 - Docker and Docker Compose
 - Yarn package manager
 
@@ -67,22 +67,67 @@ cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
 ```
 
-4. Start the development environment:
-```bash
-# Start the database and backend
-cd backend
-docker-compose up -d
+### Running the Application
 
-# Start the frontend development server
-cd ../frontend
-yarn dev
+The application can be run in two ways:
+
+#### Option 1: Using Docker Compose (Recommended)
+
+This will start all services (frontend, backend, and database) in containers:
+
+```bash
+# Start all services
+docker-compose up --build
+
+# To run in detached mode
+docker-compose up -d --build
 ```
 
 The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:3001
+- Frontend: http://localhost:8080
+- Backend API: http://localhost:3000
+- Database: localhost:5432
 
-## Testing
+To stop the services:
+```bash
+docker-compose down
+```
+
+#### Option 2: Running Services Individually
+
+1. Start the database:
+```bash
+cd backend
+docker-compose up db -d
+```
+
+2. Start the backend:
+```bash
+cd backend
+yarn install
+yarn prisma generate
+yarn prisma migrate deploy
+yarn start:dev
+```
+
+3. Start the frontend:
+```bash
+cd frontend
+yarn install
+yarn dev
+```
+
+## Development
+
+### Database Migrations
+
+To create and apply new migrations:
+```bash
+cd backend
+yarn prisma migrate dev
+```
+
+### Testing
 
 Run the test suite:
 ```bash
