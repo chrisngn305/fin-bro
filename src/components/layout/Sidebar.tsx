@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
   Home, 
   PieChart, 
@@ -12,10 +12,12 @@ import {
   TrendingUp,
   MessageCircle,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/auth-context";
 
 interface NavItem {
   title: string;
@@ -43,8 +45,24 @@ const navItems: NavItem[] = [
 
 const Sidebar = ({ isCollapsed, onCollapseChange }: SidebarProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   
   const isActive = (path: string) => location.pathname === path;
+  
+  const handleLogout = async () => {
+    try {
+      logout();
+      // Wait a moment for the state to update
+      await new Promise(resolve => setTimeout(resolve, 100));
+      // Navigate to login page
+      navigate('/login', { replace: true });
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Even if there's an error, we still want to navigate to login
+      navigate('/login', { replace: true });
+    }
+  };
   
   return (
     <aside 
@@ -95,6 +113,24 @@ const Sidebar = ({ isCollapsed, onCollapseChange }: SidebarProps) => {
           ))}
         </ul>
       </nav>
+
+      <div className="mt-auto border-t p-4">
+        <Button
+          variant="ghost"
+          onClick={handleLogout}
+          className={cn(
+            "flex items-center gap-3 px-3 py-2 w-full rounded-md transition-colors text-gray-600 hover:text-red-600 hover:bg-red-50",
+          )}
+        >
+          <LogOut className="h-5 w-5 flex-shrink-0" />
+          <span className={cn(
+            "transition-all duration-300",
+            isCollapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100 w-auto"
+          )}>
+            Logout
+          </span>
+        </Button>
+      </div>
     </aside>
   );
 };

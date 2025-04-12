@@ -1,69 +1,112 @@
-# Welcome to your Lovable project
+# Fin-Bro - Financial Management Application
 
-## Project info
+A comprehensive financial management application built with React, TypeScript, NestJS, and PostgreSQL.
 
-**URL**: https://lovable.dev/projects/0a0a0fa0-7a28-4e11-82dc-d668f4da3d7c
+## Features
 
-## How can I edit this code?
+- User Authentication
+- Budget Tracking
+- Transaction Management
+- Investment Portfolio
+- Debt Tracking
+- Financial Goals
+- Fund Management
+- Financial Advisor Integration
+- Insights and Analytics
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+### Frontend
+- React
+- TypeScript
+- React Query
+- Axios
+- Tailwind CSS
+- Jest & React Testing Library
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0a0a0fa0-7a28-4e11-82dc-d668f4da3d7c) and start prompting.
+### Backend
+- NestJS
+- TypeScript
+- Prisma
+- PostgreSQL
+- JWT Authentication
+- Passport.js
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js (v18 or higher)
+- Docker and Docker Compose
+- Yarn package manager
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/fin-bro.git
+cd fin-bro
 ```
 
-**Edit a file directly in GitHub**
+2. Install dependencies:
+```bash
+# Install frontend dependencies
+cd frontend
+yarn install
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# Install backend dependencies
+cd ../backend
+yarn install
+```
 
-**Use GitHub Codespaces**
+3. Set up environment variables:
+```bash
+# Backend
+cp backend/.env.example backend/.env
+# Frontend
+cp frontend/.env.example frontend/.env
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+4. Start the development environment:
+```bash
+# Start the database and backend
+cd backend
+docker-compose up -d
 
-## What technologies are used for this project?
+# Start the frontend development server
+cd ../frontend
+yarn dev
+```
 
-This project is built with .
+The application will be available at:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:3001
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Testing
 
-## How can I deploy this project?
+Run the test suite:
+```bash
+# Frontend tests
+cd frontend
+yarn test
 
-Simply open [Lovable](https://lovable.dev/projects/0a0a0fa0-7a28-4e11-82dc-d668f4da3d7c) and click on Share -> Publish.
+# Backend tests
+cd backend
+yarn test
+```
 
-## I want to use a custom domain - is that possible?
+## API Documentation
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+The API documentation is available at `/api/docs` when running the backend server.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

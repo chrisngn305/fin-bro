@@ -1,0 +1,40 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "success": "Успешно",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "add": "Добавить",
+    "search": "Поиск"
+  },
+  "auth": {
+    "login": "Войти",
+    "register": "Регистрация",
+    "logout": "Выйти",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "forgotPassword": "Забыли пароль?",
+    "rememberMe": "Запомнить меня"
+  },
+  "investments": {
+    "title": "Инвестиции",
+    "addInvestment": "Добавить инвестицию",
+    "editInvestment": "Редактировать инвестицию",
+    "deleteInvestment": "Удалить инвестицию",
+    "name": "Название",
+    "amount": "Сумма",
+    "date": "Дата",
+    "type": "Тип",
+    "description": "Описание"
+  },
+  "validation": {
+    "required": "Поле {{field}} обязательно",
+    "email": "Введите корректный email",
+    "password": "Пароль должен содержать минимум 8 символов",
+    "passwordsMatch": "Пароли должны совпадать"
+  }
+} 

@@ -1,0 +1,40 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember Me"
+  },
+  "investments": {
+    "title": "Investments",
+    "addInvestment": "Add Investment",
+    "editInvestment": "Edit Investment",
+    "deleteInvestment": "Delete Investment",
+    "name": "Name",
+    "amount": "Amount",
+    "date": "Date",
+    "type": "Type",
+    "description": "Description"
+  },
+  "validation": {
+    "required": "{{field}} is required",
+    "email": "Please enter a valid email",
+    "password": "Password must be at least 8 characters",
+    "passwordsMatch": "Passwords must match"
+  }
+} 
