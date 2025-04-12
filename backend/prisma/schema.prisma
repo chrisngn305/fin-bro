@@ -1,0 +1,171 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  password        String
+  name            String?
+  timezone        String    @default("UTC")
+  currency        String    @default("USD")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  investments     Investment[]
+  investmentHistory InvestmentHistory[]
+  debts           Debt[]
+  goals           Goal[]
+  goalContributions GoalContribution[]
+  budgets         Budget[]
+  transactions    Transaction[]
+  linkedAccounts  LinkedAccount[]
+  chatMessages    ChatMessage[]
+  funds           Fund[]
+}
+
+model Investment {
+  id            String    @id @default(uuid())
+  userId        String
+  name          String
+  symbol        String?
+  type          String
+  value         Float
+  shares        Float
+  price         Float
+  costBasis     Float
+  return        Float
+  returnPercentage Float
+  lastUpdated   DateTime
+  history       InvestmentHistory[]
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model InvestmentHistory {
+  id            String    @id @default(uuid())
+  investmentId  String
+  userId        String
+  date          DateTime
+  value         Float
+  investment    Investment @relation(fields: [investmentId], references: [id])
+  user          User      @relation(fields: [userId], references: [id])
+}
+
+model Debt {
+  id              String    @id @default(uuid())
+  userId          String
+  name            String
+  type            String
+  amount          Float
+  remainingBalance Float
+  interestRate    Float
+  monthlyPayment  Float
+  dueDate         String
+  nextPaymentDate DateTime
+  startDate       DateTime
+  endDate         DateTime
+  payoffProgress  Float
+  user            User      @relation(fields: [userId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Goal {
+  id            String    @id @default(uuid())
+  name          String
+  description   String
+  targetAmount  Float
+  currentAmount Float
+  targetDate    DateTime
+  category      String?
+  priority      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  contributions GoalContribution[]
+}
+
+model GoalContribution {
+  id        String   @id @default(uuid())
+  amount    Float
+  date      DateTime @default(now())
+  goalId    String
+  userId    String
+  goal      Goal     @relation(fields: [goalId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Budget {
+  id            String    @id @default(uuid())
+  userId        String
+  category      String
+  amount        Float
+  isIncome      Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Transaction {
+  id            String    @id @default(uuid())
+  userId        String
+  amount        Float
+  description   String
+  category      String
+  date          DateTime
+  type          String    // income or expense
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model LinkedAccount {
+  id            String    @id @default(uuid())
+  userId        String
+  name          String
+  type          String
+  status        String    @default("active")
+  lastSync      DateTime
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ChatMessage {
+  id            String    @id @default(uuid())
+  userId        String
+  role          String    // user or assistant
+  content       String
+  user          User      @relation(fields: [userId], references: [id])
+  createdAt     DateTime  @default(now())
+}
+
+model Fund {
+  id              String    @id @default(uuid())
+  name            String
+  description     String
+  amount          Float
+  category        String?
+  startDate       DateTime?
+  linkedAccountId String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+}
