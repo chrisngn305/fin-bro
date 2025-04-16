@@ -22,24 +22,77 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Helper functions for user state persistence
+const saveUserToStorage = (user: User) => {
+  localStorage.setItem('user', JSON.stringify(user));
+};
+
+const getUserFromStorage = (): User | null => {
+  const userString = localStorage.getItem('user');
+  if (!userString) return null;
+  try {
+    return JSON.parse(userString);
+  } catch (e) {
+    console.error('Failed to parse user from localStorage:', e);
+    return null;
+  }
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  // Initialize user state from localStorage
+  const [user, setUser] = useState<User | null>(() => getUserFromStorage());
   const [loading, setLoading] = useState(true);
+
+  // Custom setUser function that also saves to localStorage
+  const setUserWithStorage = (userData: User | null) => {
+    if (userData) {
+      saveUserToStorage(userData);
+    } else {
+      localStorage.removeItem('user');
+    }
+    setUser(userData);
+  };
 
   useEffect(() => {
     const validateToken = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const response = await apiClient.get('/auth/validate');
-          setUser(response.data.user);
-        } catch (error) {
-          console.error('Token validation error:', error);
-          localStorage.removeItem('token');
-          setUser(null);
-        }
+      console.log('Validating token:', token ? 'Token exists' : 'No token found');
+      
+      // If we already have a user in state from localStorage, use that initially
+      const cachedUser = getUserFromStorage();
+      if (cachedUser) {
+        console.log('Using cached user data from localStorage');
+        setUser(cachedUser);
       }
-      setLoading(false);
+      
+      if (!token) {
+        console.log('No token found, setting loading to false');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        console.log('Making validation request...');
+        const response = await apiClient.get('/auth/validate');
+        console.log('Validation response:', response.data);
+        
+        if (response.data.user) {
+          console.log('Setting user from validation response');
+          setUserWithStorage(response.data.user);
+        } else {
+          console.error('No user data in validation response');
+          // Keep using cached user data if available
+          console.log('Invalid user data received, keeping cached user data');
+        }
+      } catch (error) {
+        console.error('Token validation error:', error);
+        // Don't remove token or set user to null on validation error
+        // Keep the cached user state
+        console.log('Validation failed, keeping cached user data');
+      } finally {
+        console.log('Setting loading to false');
+        setLoading(false);
+      }
     };
 
     validateToken();
@@ -47,12 +100,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
+      console.log('Attempting login...');
       const response = await apiClient.post('/auth/login', { email, password });
+      console.log('Login response:', response.data);
+      
       if (response.data.access_token) {
+        console.log('Storing token and fetching user data');
         localStorage.setItem('token', response.data.access_token);
         // Fetch user data after successful login
         const userResponse = await apiClient.get('/users/me');
-        setUser(userResponse.data);
+        console.log('User data response:', userResponse.data);
+        setUserWithStorage(userResponse.data);
       } else {
         throw new Error('No access token received');
       }
@@ -67,7 +125,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await apiClient.post('/auth/register', { email, password, name });
       if (response.data.access_token) {
         localStorage.setItem('token', response.data.access_token);
-        setUser(response.data.user);
+        setUserWithStorage(response.data.user);
       } else {
         throw new Error('No access token received');
       }
@@ -80,10 +138,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     try {
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       setUser(null);
     } catch (error) {
       console.error('Logout error:', error);
-      // Even if there's an error removing the token, we still want to clear the user state
+      localStorage.removeItem('user');
       setUser(null);
     }
   };
@@ -100,7 +159,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const verifyEmail = async (token: string) => {
     try {
       const response = await apiClient.post('/auth/verify-email', { token });
-      setUser(response.data.user);
+      setUserWithStorage(response.data.user);
     } catch (error) {
       console.error('Email verification error:', error);
       throw error;
